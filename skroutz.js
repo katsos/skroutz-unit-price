@@ -11,11 +11,12 @@ function getProductCards() {
 }
 
 function getCardParsed(cardElem) {
-    const titleElem = cardElem.querySelector('.js-sku-link');
-    const title = titleElem.title;
+    const priceElem = cardElem.querySelector('.product-link');
+    const title = priceElem.title;
     const { unit, size } = getSizeUnitOfMeasurement(title);
-
-    return { title, unit, size };
+    const price = getPrice(priceElem);
+    const pricePerUnit = price / size;
+    return { title, unit, size, price, pricePerUnit };
 }
 
 function getSizeUnitOfMeasurement(title) {
@@ -25,4 +26,11 @@ function getSizeUnitOfMeasurement(title) {
         return { size: matches[1].split(unit)[0], unit };
     }
     return {};
+}
+
+function getPrice(elem) {
+    const string = elem.innerText
+        .split(' €')[0]
+        .replace(',', '.');
+    return parseFloat(string);
 }
