@@ -4,10 +4,13 @@ window.onload = () => {
     const productCards = getProductCards();
     const products = productCards.map(getCardParsed);
     products.forEach(({ cardElem, pricePerUnit, unit }) => {
+        if (!pricePerUnit) return;
         const extra = document.createElement('span');
+        extra.setAttribute('style', 'margin-left: 10px; font-size: 9px; font-weight: 200; color: #707070;');
+
         const pricePerUnitRounded = Math.round(pricePerUnit * 100) / 100;
         const pricePerUnitText = Number(pricePerUnitRounded).toFixed(2).replace('.', ',');
-        extra.innerText = `${pricePerUnitText}€/${unit}`;
+        extra.innerText = `(${pricePerUnitText}€/${unit})`;
         cardElem.querySelector('.product-link').appendChild(extra);
     });
 };
