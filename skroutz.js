@@ -3,7 +3,13 @@ const SUPPORTED_MEAS_UNITS = ['ml', 'gr'];
 window.onload = () => {
     const productCards = getProductCards();
     const products = productCards.map(getCardParsed);
-    console.log(products);
+    products.forEach(({ cardElem, pricePerUnit, unit }) => {
+        const extra = document.createElement('span');
+        const pricePerUnitRounded = Math.round(pricePerUnit * 100) / 100;
+        const pricePerUnitText = Number(pricePerUnitRounded).toFixed(2).replace('.', ',');
+        extra.innerText = `${pricePerUnitText}€/${unit}`;
+        cardElem.querySelector('.product-link').appendChild(extra);
+    });
 };
 
 function getProductCards() {
@@ -16,7 +22,7 @@ function getCardParsed(cardElem) {
     const { unit, size } = getSizeUnitOfMeasurement(title);
     const price = getPrice(priceElem);
     const pricePerUnit = price / size;
-    return { title, unit, size, price, pricePerUnit };
+    return { cardElem, title, unit, size, price, pricePerUnit };
 }
 
 function getSizeUnitOfMeasurement(title) {
