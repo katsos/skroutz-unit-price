@@ -1,6 +1,8 @@
 const SUPPORTED_MEAS_UNITS = ['ml', 'gr'];
 
 window.onload = () => {
+    if (document.querySelector('.unit-price')) return;
+
     const productCards = getProductCards();
     const products = productCards.map(getCardParsed);
     products.forEach(({ cardElem, pricePerUnit, unit }) => {
