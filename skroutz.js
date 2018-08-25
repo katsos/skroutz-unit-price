@@ -5,13 +5,14 @@ window.onload = () => {
     const products = productCards.map(getCardParsed);
     products.forEach(({ cardElem, pricePerUnit, unit }) => {
         if (!pricePerUnit) return;
-        const extra = document.createElement('span');
-        extra.setAttribute('style', 'margin-left: 10px; font-size: 9px; font-weight: 200; color: #707070;');
+        const unitPriceElem = document.createElement('span');
+        unitPriceElem.setAttribute('class', 'unit-price');
 
         const pricePerUnitRounded = Math.round(pricePerUnit * 100) / 100;
         const pricePerUnitText = Number(pricePerUnitRounded).toFixed(2).replace('.', ',');
-        extra.innerText = `(${pricePerUnitText}€/${unit})`;
-        cardElem.querySelector('.product-link').appendChild(extra);
+        unitPriceElem.innerText = `${pricePerUnitText}€/${unit}`;
+        const priceLink = cardElem.querySelector('.product-link');
+        insertAfter(priceLink, unitPriceElem);
     });
 };
 
@@ -42,4 +43,8 @@ function getPrice(elem) {
         .split(' €')[0]
         .replace(',', '.');
     return parseFloat(string);
+}
+
+function insertAfter(element, newElement) {
+    element.parentNode.insertBefore(newElement, element.nextSibling);
 }
