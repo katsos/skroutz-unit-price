@@ -2,7 +2,7 @@
     "manifest_version": 2,
   
     "name": "Skroutz Price Per Measurement Unit",
-    "description": "Did you know that if you feed a bot with a burger, it will make money for you?",
+    "description": "",
     "version": "0.0.0",
 
     "content_scripts": [
